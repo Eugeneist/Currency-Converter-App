@@ -1,20 +1,34 @@
 import styled from "styled-components";
 import Box from "@mui/material/Box";
 import CurrencyConventer from "./CurrencyConventer";
+import background from "../lines.png";
 
 const StyledMain = styled.div`
-  background: linear-gradient(
-    180deg,
-    hsla(0, 0%, 0%, 1) 24%,
-    hsla(352, 78%, 27%, 1) 95%,
-    hsla(352, 78%, 29%, 1) 100%
-  );
+  background: url(${background}),
+    linear-gradient(
+      180deg,
+      hsla(0, 0%, 0%, 1) 24%,
+      hsla(352, 78%, 27%, 1) 95%,
+      hsla(352, 78%, 29%, 1) 100%
+    );
+
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 100% 0.1%;
+  background-size: cover;
 
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
+
+// background: linear-gradient(
+//   180deg,
+//   hsla(0, 0%, 0%, 1) 24%,
+//   hsla(352, 78%, 27%, 1) 95%,
+//   hsla(352, 78%, 29%, 1) 100%
+// );
 
 // export default function SelectTextFields() {
 //   const [currency, setCurrency] = React.useState('EUR');

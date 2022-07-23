@@ -9,7 +9,7 @@ const ConverterApp = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`/p24api/pubinfo?json&exchange&coursid=5`).then((data) => {
+    axios.get(`/p24api/pubinfo?exchange&json&coursid=11`).then((data) => {
       setCurrencies(data);
       setLoading(false);
     });

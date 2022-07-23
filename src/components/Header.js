@@ -30,7 +30,7 @@ const Header = ({ currencies, loading }) => {
           >
             Currency Conventer
           </Typography>
-          <Container maxWidth="sm">
+          <Container maxWidth="md">
             {loading ? (
               <CircularProgress />
             ) : (

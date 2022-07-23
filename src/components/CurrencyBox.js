@@ -7,7 +7,7 @@ const Item = styled(Paper)(() => ({
   display: "flex",
   flexDirection: "column",
   fontSize: "10px",
-  width: "900px",
+  width: "200px",
   color: "#fff",
   backgroundColor: "#000",
 }));
