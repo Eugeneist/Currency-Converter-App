@@ -1,18 +1,7 @@
-import Header from "./components/Header";
-import Main from "./components/Main";
-import "./App.css";
+import ConverterApp from "./components/ConverterApp";
 
 function App() {
-  return (
-    <div className="App">
-      <header>
-        <Header />
-      </header>
-      <body>
-        <Main />
-      </body>
-    </div>
-  );
+  return <ConverterApp />;
 }
 
 export default App;

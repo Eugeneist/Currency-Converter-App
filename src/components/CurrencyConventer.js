@@ -21,16 +21,16 @@ const CurrencyConventer = ({ currencies }) => {
   const newCurrencies = [
     {
       id: "USD",
-      // buy: currencies[0].buy,
-      // sale: currencies[0].sale,
-      // base: currencies[0].base_ccy,
+      buy: currencies[0].buy,
+      sale: currencies[0].sale,
+      base: currencies[0].base_ccy,
       label: "USD $",
     },
     {
       id: "EUR",
-      // buy: currencies[1].buy,
-      // sale: currencies[1].sale,
-      // base: currencies[1].base_ccy,
+      buy: currencies[1].buy,
+      sale: currencies[1].sale,
+      base: currencies[1].base_ccy,
       label: "EUR €",
     },
     {
@@ -39,9 +39,9 @@ const CurrencyConventer = ({ currencies }) => {
     },
     {
       id: "BTC",
-      // buy: currencies[2].buy,
-      // sale: currencies[2].sale,
-      // base: currencies[2].base_ccy,
+      buy: currencies[2].buy,
+      sale: currencies[2].sale,
+      base: currencies[2].base_ccy,
       label: "BTC ฿",
     },
   ];

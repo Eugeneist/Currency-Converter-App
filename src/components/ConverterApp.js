@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "../helpers/axios";
-import Container from "@mui/material/Container";
-import CurrencyBox from "./CurrencyBox";
-import CircularProgress from "@mui/material/CircularProgress";
+import Header from "./Header";
+import Main from "./Main";
 
-const CurrencyStatus = () => {
+const ConverterApp = () => {
   const [currencies, setCurrencies] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -18,15 +17,14 @@ const CurrencyStatus = () => {
 
   return (
     <>
-      <Container maxWidth="sm">
-        {isLoading ? (
-          <CircularProgress />
-        ) : (
-          <CurrencyBox currencies={currencies} />
-        )}
-      </Container>
+      <header>
+        <Header currencies={currencies} loading={isLoading} />
+      </header>
+      <body>
+        <Main currencies={currencies} />
+      </body>
     </>
   );
 };
 
-export default CurrencyStatus;
+export default ConverterApp;

@@ -4,29 +4,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AdbIcon from "@mui/icons-material/Adb";
-import CurrencyStatus from "./CurrencyStatus";
+import CurrencyBox from "./CurrencyBox";
+import CircularProgress from "@mui/material/CircularProgress";
 
-const Header = () => {
-  // const [anchorElNav, setAnchorElNav] =
-  //   (React.useState < null) | (HTMLElement > null);
-  // const [anchorElUser, setAnchorElUser] =
-  //   (React.useState < null) | (HTMLElement > null);
-
-  // const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
-  // const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
-
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
-
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
-
+const Header = ({ currencies, loading }) => {
   return (
     <AppBar position="static" sx={{ backgroundColor: "#000" }}>
       <Container maxWidth="xl">
@@ -49,7 +30,13 @@ const Header = () => {
           >
             Currency Conventer
           </Typography>
-          <CurrencyStatus />
+          <Container maxWidth="sm">
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <CurrencyBox currencies={currencies} />
+            )}
+          </Container>
         </Toolbar>
       </Container>
     </AppBar>

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Box from "@mui/material/Box";
 import CurrencyConventer from "./CurrencyConventer";
-import currencies from "./CurrencyStatus";
 
 const StyledMain = styled.div`
   background: linear-gradient(
@@ -24,7 +23,7 @@ const StyledMain = styled.div`
 //     setCurrency(event.target.value);
 // };
 
-const Main = () => {
+const Main = ({ currencies }) => {
   return (
     <StyledMain>
       <Box
