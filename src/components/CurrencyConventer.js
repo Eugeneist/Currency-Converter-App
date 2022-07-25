@@ -14,14 +14,22 @@ const StyledConventer = styled.div`
 `;
 
 const CurrencyConventer = ({ currencies }) => {
-  const [selectedValueFrom, setSelectedValueFrom] = useState("1");
-  const [selectedValueTo, setSelectedValueTo] = useState("1");
+  const [selectedValueFrom, setSelectedValueFrom] = useState(1);
+  const [selectedValueTo, setSelectedValueTo] = useState(1);
 
-  const [selectedCurrFrom, setSelectedCurrFrom] = useState("1");
-  const [selectedCurrTo, setSelectedCurrTo] = useState("1");
-  // const [exchangedValue, setExchangedValue] = useState("");
+  const [selectedCurrFrom, setSelectedCurrFrom] = useState(0);
+  const [selectedCurrTo, setSelectedCurrTo] = useState(0);
+
+  const [valueFromCurrency, setValueFromCurrency] = useState(true);
 
   const newCurrencies = [
+    {
+      id: "choose",
+      buy: "0",
+      sale: "0",
+      base: "choose",
+      label: "Choose currency",
+    },
     {
       id: "USD",
       buy: currencies[0]?.buy,
@@ -57,26 +65,27 @@ const CurrencyConventer = ({ currencies }) => {
   ];
 
   useEffect(() => {
-    if (selectedValueFrom != null && selectedValueTo != null) {
-      // console.log(selectedValueFrom);
-      // console.log(selectedValueTo);
-      // console.log(selectedCurrFrom);
-      // console.log(selectedCurrTo);
-      if (selectedValueFrom) {
-        console.log(Math.round(selectedValueFrom / selectedCurrTo));
-      }
-      if (selectedValueTo) {
-        console.log(Math.round(selectedValueTo * selectedCurrFrom));
-      }
+    if (valueFromCurrency) {
+      setSelectedValueTo((selectedValueFrom / selectedCurrTo).toFixed(2));
+    } else {
+      setSelectedValueFrom((selectedValueTo * selectedCurrFrom).toFixed(2));
     }
-  }, [selectedValueFrom, selectedValueTo, selectedCurrFrom, selectedCurrTo]);
+  }, [
+    selectedValueFrom,
+    selectedValueTo,
+    selectedCurrFrom,
+    selectedCurrTo,
+    valueFromCurrency,
+  ]);
 
   let handleValueFromChange = (event) => {
     setSelectedValueFrom(event.target.value);
+    setValueFromCurrency(true);
   };
 
   let handleValueToChange = (event) => {
     setSelectedValueTo(event.target.value);
+    setValueFromCurrency(false);
   };
 
   let handleCurrFromChange = (event) => {
@@ -91,7 +100,7 @@ const CurrencyConventer = ({ currencies }) => {
     <StyledConventer>
       <div>
         <TextField
-          id="outlined-name"
+          id="valueFrom"
           label="You send"
           value={selectedValueFrom}
           onChange={handleValueFromChange}
@@ -116,7 +125,7 @@ const CurrencyConventer = ({ currencies }) => {
       </div>
       <div>
         <TextField
-          id="outlined-name"
+          id="valueTo"
           label="You get"
           value={selectedValueTo}
           onChange={handleValueToChange}
