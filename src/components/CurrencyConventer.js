@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import axiosCurrencyConverter from "../helpers/axiosCurrencyConverter";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
+import { CurrenciesList } from "./CurrenciesList";
 
 const StyledConventer = styled.div`
   width: 90%;
@@ -13,70 +15,113 @@ const StyledConventer = styled.div`
   border-radius: 30px;
 `;
 
-const CurrencyConventer = ({ currencies }) => {
+const key = "e23b448847de525effe2906816e83166160f12dc";
+
+const CurrencyConventer = () => {
   const [selectedValueFrom, setSelectedValueFrom] = useState(1);
   const [selectedValueTo, setSelectedValueTo] = useState(1);
 
-  const [selectedCurrFrom, setSelectedCurrFrom] = useState(0);
-  const [selectedCurrTo, setSelectedCurrTo] = useState(0);
+  const [selectedCurrFrom, setSelectedCurrFrom] = useState("USD");
+  const [selectedCurrTo, setSelectedCurrTo] = useState("USD");
 
   const [valueFromCurrency, setValueFromCurrency] = useState(true);
 
-  const newCurrencies = [
-    {
-      id: "choose",
-      buy: "0",
-      sale: "0",
-      base: "choose",
-      label: "Choose currency",
+  const [mainCurrencies, setMainCurrencies] = useState({
+    rates: {
+      USD: {
+        rate_for_amount: "1",
+      },
+      EUR: {
+        rate_for_amount: "1",
+      },
+      UAH: {
+        rate_for_amount: "1",
+      },
+      RUB: {
+        rate_for_amount: "1",
+      },
+      MXN: {
+        rate_for_amount: "1",
+      },
+      AED: {
+        rate_for_amount: "1",
+      },
+      CAD: {
+        rate_for_amount: "1",
+      },
+      KZT: {
+        rate_for_amount: "1",
+      },
+      MDL: {
+        rate_for_amount: "1",
+      },
     },
-    {
-      id: "USD",
-      buy: currencies[0]?.buy,
-      sale: currencies[0]?.sale,
-      base: currencies[0]?.base_ccy,
-      label: "USD $",
-    },
-    {
-      id: "EUR",
-      buy: currencies[1]?.buy,
-      sale: currencies[1]?.sale,
-      base: currencies[1]?.base_ccy,
-      label: "EUR €",
-    },
-    {
-      id: "UAH",
-      label: "UAH ₴",
-    },
-    {
-      id: "RUR",
-      buy: currencies[2]?.buy,
-      sale: currencies[2]?.sale,
-      base: currencies[2]?.base_ccy,
-      label: "RUR ₽",
-    },
-    {
-      id: "BTC",
-      buy: currencies[3]?.buy,
-      sale: currencies[3]?.sale,
-      base: currencies[3]?.base_ccy,
-      label: "BTC ฿",
-    },
-  ];
+  });
+
+  let from;
+  let to;
+  let amount;
+  if (valueFromCurrency) {
+    from = selectedCurrFrom;
+    to = selectedCurrTo;
+    amount = selectedValueFrom;
+    // setSelectedValueTo(mainCurrencies.rates[to].rate_for_amount);
+  } else {
+    from = selectedCurrTo;
+    to = selectedCurrFrom;
+    amount = selectedValueTo;
+    // setSelectedValueFrom(mainCurrencies.rates[to].rate_for_amount);
+  }
 
   useEffect(() => {
-    if (valueFromCurrency) {
-      setSelectedValueTo((selectedValueFrom / selectedCurrTo).toFixed(2));
-    } else {
-      setSelectedValueFrom((selectedValueTo * selectedCurrFrom).toFixed(2));
+    if (selectedValueFrom != null && selectedValueTo != null) {
+      axiosCurrencyConverter
+        .get(
+          `/v2/currency/convert?api_key=${key}&from=${from}&to=${to}&amount=${amount}&format=json`
+        )
+        .then((data) => {
+          setMainCurrencies(data);
+        });
+      if (valueFromCurrency) {
+        setSelectedValueTo(mainCurrencies.rates[to].rate_for_amount);
+      } else {
+        setSelectedValueFrom(mainCurrencies.rates[to].rate_for_amount);
+      }
     }
-  }, [
-    selectedValueFrom,
-    selectedValueTo,
-    selectedCurrFrom,
-    selectedCurrTo,
-    valueFromCurrency,
-  ]);
+  }, [selectedValueFrom, selectedValueTo, amount, from, to]);
+
+  // function getExchange(from, to, amount) {
+  //   axiosCurrencyConverter
+  //     .get(
+  //       `/v2/currency/convert?api_key=${key}&from=${from}&to=${to}&amount=${amount}&format=json`
+  //     )
+  //     .then((data) => {
+  //       setMainCurrencies(data);
+  //     });
+  // }
+
+  // useEffect(() => {
+  //   if (valueFromCurrency) {
+  //     let from = selectedCurrFrom;
+  //     let to = selectedCurrTo;
+  //     let amount = selectedValueFrom;
+  //     getExchange(from, to, amount);
+  //     setSelectedValueTo(mainCurrencies.rates[to].rate_for_amount);
+  //   } else {
+  //     let from = selectedCurrTo;
+  //     let to = selectedCurrFrom;
+  //     let amount = selectedValueTo;
+  //     getExchange(from, to, amount);
+  //     setSelectedValueFrom(mainCurrencies.rates[to].rate_for_amount);
+  //   }
+  // }, [
+  //   selectedValueFrom,
+  //   selectedValueTo,
+  //   selectedCurrFrom,
+  //   selectedCurrTo,
+  //   valueFromCurrency,
+  //   // mainCurrencies,
+  // ]);
 
   let handleValueFromChange = (event) => {
     setSelectedValueFrom(event.target.value);
@@ -90,10 +135,12 @@ const CurrencyConventer = ({ currencies }) => {
 
   let handleCurrFromChange = (event) => {
     setSelectedCurrFrom(event.target.value);
+    setValueFromCurrency(true);
   };
 
   let handleCurrToChange = (event) => {
     setSelectedCurrTo(event.target.value);
+    setValueFromCurrency(false);
   };
 
   return (
@@ -116,8 +163,8 @@ const CurrencyConventer = ({ currencies }) => {
           }}
           helperText="Please select your currency"
         >
-          {newCurrencies.map((object) => (
-            <option key={object.id} value={object.sale}>
+          {CurrenciesList.map((object) => (
+            <option key={object.id} value={object.value}>
               {object.label}
             </option>
           ))}
@@ -141,8 +188,8 @@ const CurrencyConventer = ({ currencies }) => {
           }}
           helperText="Please select your currency"
         >
-          {newCurrencies.map((object) => (
-            <option key={object.id} value={object.buy}>
+          {CurrenciesList.map((object) => (
+            <option key={object.id} value={object.value}>
               {object.label}
             </option>
           ))}

@@ -23,21 +23,7 @@ const StyledMain = styled.div`
   justify-content: center;
 `;
 
-// background: linear-gradient(
-//   180deg,
-//   hsla(0, 0%, 0%, 1) 24%,
-//   hsla(352, 78%, 27%, 1) 95%,
-//   hsla(352, 78%, 29%, 1) 100%
-// );
-
-// export default function SelectTextFields() {
-//   const [currency, setCurrency] = React.useState('EUR');
-
-//   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setCurrency(event.target.value);
-// };
-
-const Main = ({ currencies }) => {
+const Main = () => {
   return (
     <StyledMain>
       <Box
@@ -55,7 +41,7 @@ const Main = ({ currencies }) => {
         noValidate
         autoComplete="off"
       >
-        <CurrencyConventer currencies={currencies} />
+        <CurrencyConventer />
       </Box>
     </StyledMain>
   );

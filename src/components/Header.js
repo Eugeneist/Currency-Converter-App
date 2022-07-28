@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
+import headerCurrency from "../helpers/axiosHeaderCurrency";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -7,7 +9,20 @@ import AdbIcon from "@mui/icons-material/Adb";
 import CurrencyBox from "./CurrencyBox";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const Header = ({ currencies, loading }) => {
+const Header = () => {
+  const [currencies, setCurrencies] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    headerCurrency
+      .get(`/p24api/pubinfo?exchange&json&coursid=11`)
+      .then((data) => {
+        setCurrencies(data);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <AppBar position="static" sx={{ backgroundColor: "#000" }}>
       <Container maxWidth="xl">
@@ -31,7 +46,7 @@ const Header = ({ currencies, loading }) => {
             Currency Conventer
           </Typography>
           <Container maxWidth="md">
-            {loading ? (
+            {isLoading ? (
               <CircularProgress />
             ) : (
               <CurrencyBox currencies={currencies} />
