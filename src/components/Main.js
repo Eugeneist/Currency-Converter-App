@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Box from "@mui/material/Box";
-import CurrencyConventer from "./CurrencyConventer";
+import CurrencyConverter from "./CurrencyConverter";
 import background from "../assets/images/lines.png";
 
 const StyledMain = styled.div`
@@ -41,7 +41,7 @@ const Main = () => {
         noValidate
         autoComplete="off"
       >
-        <CurrencyConventer />
+        <CurrencyConverter />
       </Box>
     </StyledMain>
   );

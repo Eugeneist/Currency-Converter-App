@@ -5,7 +5,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import AdbIcon from "@mui/icons-material/Adb";
+import CurrencyExchangeRoundedIcon from "@mui/icons-material/CurrencyExchangeRounded";
 import CurrencyBox from "./CurrencyBox";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -27,7 +27,9 @@ const Header = () => {
     <AppBar position="static" sx={{ backgroundColor: "#000" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <CurrencyExchangeRoundedIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          />
           <Typography
             variant="h6"
             noWrap
@@ -43,7 +45,7 @@ const Header = () => {
               textDecoration: "none",
             }}
           >
-            Currency Conventer
+            Currency Converter App
           </Typography>
           <Container maxWidth="md">
             {isLoading ? (

@@ -17,7 +17,7 @@ const StyledConventer = styled.div`
 
 const key = "e23b448847de525effe2906816e83166160f12dc";
 
-const CurrencyConventer = () => {
+const CurrencyConverter = () => {
   const [selectedValueFrom, setSelectedValueFrom] = useState(0);
   const [selectedValueTo, setSelectedValueTo] = useState(0);
 
@@ -168,4 +168,4 @@ const CurrencyConventer = () => {
   );
 };
 
-export default CurrencyConventer;
+export default CurrencyConverter;
