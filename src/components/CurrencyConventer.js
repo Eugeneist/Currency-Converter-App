@@ -18,8 +18,8 @@ const StyledConventer = styled.div`
 const key = "e23b448847de525effe2906816e83166160f12dc";
 
 const CurrencyConventer = () => {
-  const [selectedValueFrom, setSelectedValueFrom] = useState(1);
-  const [selectedValueTo, setSelectedValueTo] = useState(1);
+  const [selectedValueFrom, setSelectedValueFrom] = useState(0);
+  const [selectedValueTo, setSelectedValueTo] = useState(0);
 
   const [selectedCurrFrom, setSelectedCurrFrom] = useState("USD");
   const [selectedCurrTo, setSelectedCurrTo] = useState("USD");
@@ -65,16 +65,14 @@ const CurrencyConventer = () => {
     from = selectedCurrFrom;
     to = selectedCurrTo;
     amount = selectedValueFrom;
-    // setSelectedValueTo(mainCurrencies.rates[to].rate_for_amount);
   } else {
     from = selectedCurrTo;
     to = selectedCurrFrom;
     amount = selectedValueTo;
-    // setSelectedValueFrom(mainCurrencies.rates[to].rate_for_amount);
   }
 
   useEffect(() => {
-    if (selectedValueFrom != null && selectedValueTo != null) {
+    if (selectedValueFrom != null || selectedValueTo != null) {
       axiosCurrencyConverter
         .get(
           `/v2/currency/convert?api_key=${key}&from=${from}&to=${to}&amount=${amount}&format=json`
@@ -83,45 +81,20 @@ const CurrencyConventer = () => {
           setMainCurrencies(data);
         });
       if (valueFromCurrency) {
-        setSelectedValueTo(mainCurrencies.rates[to].rate_for_amount);
+        setSelectedValueTo(mainCurrencies?.rates[to]?.rate_for_amount);
       } else {
-        setSelectedValueFrom(mainCurrencies.rates[to].rate_for_amount);
+        setSelectedValueFrom(mainCurrencies?.rates[to]?.rate_for_amount);
       }
     }
-  }, [selectedValueFrom, selectedValueTo, amount, from, to]);
-
-  // function getExchange(from, to, amount) {
-  //   axiosCurrencyConverter
-  //     .get(
-  //       `/v2/currency/convert?api_key=${key}&from=${from}&to=${to}&amount=${amount}&format=json`
-  //     )
-  //     .then((data) => {
-  //       setMainCurrencies(data);
-  //     });
-  // }
-
-  // useEffect(() => {
-  //   if (valueFromCurrency) {
-  //     let from = selectedCurrFrom;
-  //     let to = selectedCurrTo;
-  //     let amount = selectedValueFrom;
-  //     getExchange(from, to, amount);
-  //     setSelectedValueTo(mainCurrencies.rates[to].rate_for_amount);
-  //   } else {
-  //     let from = selectedCurrTo;
-  //     let to = selectedCurrFrom;
-  //     let amount = selectedValueTo;
-  //     getExchange(from, to, amount);
-  //     setSelectedValueFrom(mainCurrencies.rates[to].rate_for_amount);
-  //   }
-  // }, [
-  //   selectedValueFrom,
-  //   selectedValueTo,
-  //   selectedCurrFrom,
-  //   selectedCurrTo,
-  //   valueFromCurrency,
-  //   // mainCurrencies,
-  // ]);
+  }, [
+    selectedValueFrom,
+    selectedValueTo,
+    amount,
+    from,
+    to,
+    valueFromCurrency,
+    mainCurrencies.rates,
+  ]);
 
   let handleValueFromChange = (event) => {
     setSelectedValueFrom(event.target.value);
@@ -155,8 +128,6 @@ const CurrencyConventer = () => {
         <TextField
           id="outlined-select-currency-native"
           select
-          // label="Select currency"
-          // value={currency}
           onChange={handleCurrFromChange}
           SelectProps={{
             native: true,
@@ -180,8 +151,6 @@ const CurrencyConventer = () => {
         <TextField
           id="outlined-select-currency-native"
           select
-          // label="Select currency"
-          // value={currency}
           onChange={handleCurrToChange}
           SelectProps={{
             native: true,
