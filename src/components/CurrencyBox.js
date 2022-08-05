@@ -1,6 +1,7 @@
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 
 const Item = styled(Paper)(() => ({
@@ -27,6 +28,10 @@ const CurrencyBox = ({ currencies }) => {
       ))}
     </Stack>
   );
+};
+
+CurrencyBox.propTypes = {
+  currencies: PropTypes.array.isRequired,
 };
 
 export default CurrencyBox;

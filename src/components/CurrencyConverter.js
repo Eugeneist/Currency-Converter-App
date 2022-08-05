@@ -13,6 +13,10 @@ const StyledConventer = styled.div`
   justify-content: space-around;
   border: 1px solid gray;
   border-radius: 30px;
+
+  @media (max-width: 950px) {
+    border: none;
+  }
 `;
 
 const key = "e23b448847de525effe2906816e83166160f12dc";

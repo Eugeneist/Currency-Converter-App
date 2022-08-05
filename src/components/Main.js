@@ -21,6 +21,10 @@ const StyledMain = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1150px) {
+    padding: 10px;
+  }
 `;
 
 const Main = () => {

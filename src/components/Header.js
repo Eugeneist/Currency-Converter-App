@@ -24,7 +24,7 @@ const Header = () => {
   }, []);
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#000" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#000", padding: "10px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <CurrencyExchangeRoundedIcon
