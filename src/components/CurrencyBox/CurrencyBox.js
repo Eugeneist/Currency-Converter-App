@@ -1,16 +1,16 @@
-import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import PropTypes from "prop-types";
-import { styled } from "@mui/material/styles";
+import Divider from '@mui/material/Divider';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
 
 const Item = styled(Paper)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  fontSize: "10px",
-  width: "200px",
-  color: "#fff",
-  backgroundColor: "#000",
+  display: 'flex',
+  flexDirection: 'column',
+  fontSize: '10px',
+  width: '200px',
+  color: '#fff',
+  backgroundColor: '#000',
 }));
 
 const CurrencyBox = ({ currencies }) => {

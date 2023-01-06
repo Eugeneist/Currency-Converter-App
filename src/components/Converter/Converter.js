@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import axiosCurrencyConverter from "../helpers/axiosCurrencyConverter";
-import TextField from "@mui/material/TextField";
-import styled from "styled-components";
-import { CurrenciesList } from "./CurrenciesList";
+import { useState, useEffect } from 'react';
+import { сurrencyConverter } from '../../helpers/axios';
+import { CurrenciesList } from '../CurrenciesList';
+import TextField from '@mui/material/TextField';
+import styled from 'styled-components';
 
 const StyledConventer = styled.div`
   width: 90%;
@@ -19,52 +19,57 @@ const StyledConventer = styled.div`
   }
 `;
 
-const key = "e23b448847de525effe2906816e83166160f12dc";
+const key = 'e23b448847de525effe2906816e83166160f12dc';
 
-const CurrencyConverter = () => {
+const Converter = () => {
+  const data = {
+    rates: {
+      USD: {
+        rate_for_amount: '1',
+      },
+      EUR: {
+        rate_for_amount: '1',
+      },
+      UAH: {
+        rate_for_amount: '1',
+      },
+      RUB: {
+        rate_for_amount: '1',
+      },
+      MXN: {
+        rate_for_amount: '1',
+      },
+      AED: {
+        rate_for_amount: '1',
+      },
+      CAD: {
+        rate_for_amount: '1',
+      },
+      KZT: {
+        rate_for_amount: '1',
+      },
+      MDL: {
+        rate_for_amount: '1',
+      },
+    },
+  };
+
   const [selectedValueFrom, setSelectedValueFrom] = useState(0);
   const [selectedValueTo, setSelectedValueTo] = useState(0);
 
-  const [selectedCurrFrom, setSelectedCurrFrom] = useState("USD");
-  const [selectedCurrTo, setSelectedCurrTo] = useState("USD");
+  const [selectedCurrFrom, setSelectedCurrFrom] = useState('USD');
+  const [selectedCurrTo, setSelectedCurrTo] = useState('USD');
 
   const [valueFromCurrency, setValueFromCurrency] = useState(true);
 
-  const [mainCurrencies, setMainCurrencies] = useState({
-    rates: {
-      USD: {
-        rate_for_amount: "1",
-      },
-      EUR: {
-        rate_for_amount: "1",
-      },
-      UAH: {
-        rate_for_amount: "1",
-      },
-      RUB: {
-        rate_for_amount: "1",
-      },
-      MXN: {
-        rate_for_amount: "1",
-      },
-      AED: {
-        rate_for_amount: "1",
-      },
-      CAD: {
-        rate_for_amount: "1",
-      },
-      KZT: {
-        rate_for_amount: "1",
-      },
-      MDL: {
-        rate_for_amount: "1",
-      },
-    },
-  });
+  const [mainCurrencies, setMainCurrencies] = useState(data);
+
+  const [error, setError] = useState();
 
   let from;
   let to;
   let amount;
+
   if (valueFromCurrency) {
     from = selectedCurrFrom;
     to = selectedCurrTo;
@@ -77,12 +82,16 @@ const CurrencyConverter = () => {
 
   useEffect(() => {
     if (selectedValueFrom != null || selectedValueTo != null) {
-      axiosCurrencyConverter
+      сurrencyConverter
         .get(
-          `/v2/currency/convert?api_key=${key}&from=${from}&to=${to}&amount=${amount}&format=json`
+          `/v2/currency/convert?api_key=${key}&from=${from}&to=${to}&amount=${amount}&format=json`,
         )
         .then((data) => {
           setMainCurrencies(data);
+        })
+        .catch((err) => {
+          setError(err);
+          console.log(error);
         });
       if (valueFromCurrency) {
         setSelectedValueTo(mainCurrencies?.rates[to]?.rate_for_amount);
@@ -97,7 +106,8 @@ const CurrencyConverter = () => {
     from,
     to,
     valueFromCurrency,
-    mainCurrencies.rates,
+    mainCurrencies?.rates,
+    error,
   ]);
 
   let handleValueFromChange = (event) => {
@@ -172,4 +182,4 @@ const CurrencyConverter = () => {
   );
 };
 
-export default CurrencyConverter;
+export default Converter;

@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import Box from "@mui/material/Box";
-import CurrencyConverter from "./CurrencyConverter";
-import background from "../assets/images/lines.png";
+import styled from 'styled-components';
+import Box from '@mui/material/Box';
+import { Converter } from '../../components';
+import background from '../../assets/images/lines.png';
 
 const StyledMain = styled.div`
   background: url(${background}),
@@ -27,28 +27,28 @@ const StyledMain = styled.div`
   }
 `;
 
-const Main = () => {
+const MainPage = () => {
   return (
     <StyledMain>
       <Box
         component="form"
         sx={{
-          width: "1100px",
-          height: "300px",
-          backgroundColor: "#fff",
-          margin: "0 auto",
-          borderRadius: "45px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          width: '1100px',
+          height: '300px',
+          backgroundColor: '#fff',
+          margin: '0 auto',
+          borderRadius: '45px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
         noValidate
         autoComplete="off"
       >
-        <CurrencyConverter />
+        <Converter />
       </Box>
     </StyledMain>
   );
 };
 
-export default Main;
+export default MainPage;

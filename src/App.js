@@ -1,7 +1,15 @@
-import ConverterApp from "./components/ConverterApp";
+import { Header } from './components';
+import { MainPage } from './pages';
 
 function App() {
-  return <ConverterApp />;
+  return (
+    <>
+      <div className="App">
+        <Header />
+        <MainPage />
+      </div>
+    </>
+  );
 }
 
 export default App;
